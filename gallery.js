@@ -1,11 +1,16 @@
-function getExtension(url) {
-  const match = url.match(/\.(jpg|jpeg|png|webp|gif)/i);
-  return match ? match[1] : "jpg";
-}
-
 chrome.storage.local.get("images", (data) => {
   const gallery = document.getElementById("gallery");
+  const count = document.getElementById("count");
+  const empty = document.getElementById("empty");
+
   const images = data.images || [];
+
+  count.innerText = `${images.length} images`;
+
+  if (images.length === 0) {
+    empty.style.display = "block";
+    return;
+  }
 
   images.forEach((src, index) => {
     const card = document.createElement("div");
@@ -14,14 +19,15 @@ chrome.storage.local.get("images", (data) => {
     const img = document.createElement("img");
     img.src = src;
 
+    const footer = document.createElement("div");
+    footer.className = "card-footer";
+
     const btn = document.createElement("button");
     btn.className = "download-btn";
     btn.innerText = "Download";
 
     btn.addEventListener("click", () => {
-      const ext = getExtension(src);
-      const filename = `image_${index}_${Date.now()}.${ext}`;
-
+      const filename = `image_${index}_${Date.now()}.jpg`;
       chrome.downloads.download({
         url: src,
         filename,
@@ -29,8 +35,9 @@ chrome.storage.local.get("images", (data) => {
       });
     });
 
+    footer.appendChild(btn);
     card.appendChild(img);
-    card.appendChild(btn);
+    card.appendChild(footer);
     gallery.appendChild(card);
   });
 });
