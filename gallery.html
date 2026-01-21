@@ -1,44 +1,127 @@
 <!doctype html>
 <html>
   <head>
-    <title>Images from Page</title>
+    <title>Image Gallery</title>
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
     <style>
-      body {
-        font-family: Arial;
-        padding: 10px;
+      :root {
+        --primary: #4f46e5;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #e5e7eb;
       }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont;
+        background: var(--bg);
+        color: #111827;
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: white;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      header h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .badge {
+        background: var(--primary);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+      }
+
+      /* Grid */
       .grid {
+        padding: 16px;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 15px;
+        gap: 16px;
       }
+
+      /* Card */
       .card {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: center;
+        background: var(--card);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
       }
-      img {
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .card img {
         width: 100%;
-        height: auto;
+        height: 160px;
+        object-fit: cover;
+        display: block;
+        background: #eee;
       }
+
+      .card-footer {
+        padding: 10px;
+      }
+
       .download-btn {
-        margin-top: 6px;
-        padding: 6px;
         width: 100%;
-        background: #007bff;
+        padding: 8px;
+        background: var(--primary);
         color: white;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
+        font-size: 13px;
         cursor: pointer;
       }
+
       .download-btn:hover {
-        background: #0056b3;
+        background: #4338ca;
+      }
+
+      /* Empty state */
+      .empty {
+        padding: 40px;
+        text-align: center;
+        color: #6b7280;
       }
     </style>
   </head>
   <body>
-    <h2>Images from Web Page</h2>
+    <header>
+      <h2>Image Gallery</h2>
+      <span class="badge" id="count">0 images</span>
+    </header>
+
     <div class="grid" id="gallery"></div>
+
+    <div class="empty" id="empty" style="display: none">
+      No images found on this page.
+    </div>
 
     <script src="gallery.js"></script>
   </body>
