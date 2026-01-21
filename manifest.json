@@ -1,0 +1,14 @@
+{
+  "name": "Image Downloader Extension",
+  "description": "Extract & preview all images from a webpage",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "scripting", "storage", "downloads"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
