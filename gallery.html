@@ -1,128 +1,151 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Image Gallery</title>
-    <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
-    <style>
-      :root {
-        --primary: #4f46e5;
-        --bg: #f8fafc;
-        --card: #ffffff;
-        --border: #e5e7eb;
-      }
+<head>
+  <title>Image Gallery</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      body {
-        margin: 0;
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont;
-        background: var(--bg);
-        color: #111827;
-      }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      background: var(--bg);
+      color: #111827;
+    }
 
-      /* Header */
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: white;
-        padding: 14px 18px;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
 
-      header h2 {
-        margin: 0;
-        font-size: 18px;
-      }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      .badge {
-        background: var(--primary);
-        color: white;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-      }
+    h2 {
+      margin: 0;
+      font-size: 18px;
+    }
 
-      /* Grid */
-      .grid {
-        padding: 16px;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 16px;
-      }
+    .badge {
+      background: var(--primary);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
 
-      /* Card */
-      .card {
-        background: var(--card);
-        border-radius: 10px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-        transition:
-          transform 0.15s ease,
-          box-shadow 0.15s ease;
-      }
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
 
-      .card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      }
+    .action-btn {
+      padding: 6px 10px;
+      font-size: 13px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: white;
+    }
 
-      .card img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        display: block;
-        background: #eee;
-      }
+    .primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
 
-      .card-footer {
-        padding: 10px;
-      }
+    .primary:hover {
+      background: #4338ca;
+    }
 
-      .download-btn {
-        width: 100%;
-        padding: 8px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 13px;
-        cursor: pointer;
-      }
+    /* Grid */
+    .grid {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
 
-      .download-btn:hover {
-        background: #4338ca;
-      }
+    /* Card */
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      position: relative;
+    }
 
-      /* Empty state */
-      .empty {
-        padding: 40px;
-        text-align: center;
-        color: #6b7280;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h2>Image Gallery</h2>
-      <span class="badge" id="count">0 images</span>
-    </header>
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
 
-    <div class="grid" id="gallery"></div>
+    .checkbox {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      transform: scale(1.2);
+    }
 
-    <div class="empty" id="empty" style="display: none">
-      No images found on this page.
-    </div>
+    .card-footer {
+      padding: 8px;
+    }
 
-    <script src="gallery.js"></script>
-  </body>
+    .download-btn {
+      width: 100%;
+      padding: 6px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .download-btn:hover {
+      background: #4338ca;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-top">
+    <h2>Image Gallery</h2>
+    <span class="badge" id="count">0 images</span>
+  </div>
+
+  <div class="actions">
+    <button class="action-btn" id="selectAllBtn">Select All</button>
+    <button class="action-btn primary" id="downloadSelectedBtn">
+      Download Selected
+    </button>
+  </div>
+</header>
+
+<div class="grid" id="gallery"></div>
+
+<script src="gallery.js"></script>
+</body>
 </html>
